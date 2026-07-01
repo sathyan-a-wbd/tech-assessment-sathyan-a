@@ -10,7 +10,8 @@ import { useSelector } from "react-redux";
 const AddProducer = () => {
   const [loading, setLoading] = useState(false);
   const [imageFile, setImageFile] = useState(null);
-  const { navigate, updateProducers, showToast } = Common();
+  const { TokenRefreshedModal, navigate, updateProducers, showToast } =
+    Common();
   const [formData, setFormData] = useState({
     name: "",
     gender: "",
@@ -34,10 +35,11 @@ const AddProducer = () => {
 
   const validate = () => {
     const validationErrors = {};
-    if (!formData.name) validationErrors.name = "Name is required.";
-    if (!formData.gender) validationErrors.gender = "Gender is required.";
+    if (!formData.name.trim()) validationErrors.name = "Name is required.";
+    if (!formData.gender.trim())
+      validationErrors.gender = "Gender is required.";
     if (!formData.dob) validationErrors.dob = "Date of Birth is required.";
-    if (!formData.bio) validationErrors.bio = "Bio is required.";
+    if (!formData.bio.trim()) validationErrors.bio = "Bio is required.";
     return validationErrors;
   };
 
@@ -59,7 +61,7 @@ const AddProducer = () => {
       if (imageFile) fd.append("image", imageFile.originFileObj);
 
       const res = await CreateProducer(fd);
-      if (res.status == "success") {
+      if (res.status === "success") {
         updateProducers([res.data, ...producers]);
         console.log(res.message || "Producer created successfully");
         navigate(-1);
@@ -73,11 +75,11 @@ const AddProducer = () => {
         message: err?.response?.data?.message || "Something went wrong",
         type: "error",
       });
-      if (err?.response?.data?.message == "Token refreshed") {
+      if (err?.response?.data?.message === "Token refreshed") {
         TokenRefreshedModal();
-      } else if (err?.response?.data?.status == "field_error") {
+      } else if (err?.response?.data?.status === "field_error") {
         const errFields = {};
-        error.response.data.err?.forEach((e) => {
+        err?.response?.data?.err?.forEach((e) => {
           errFields[e.field] = e.message;
         });
         setErrors(errFields);
