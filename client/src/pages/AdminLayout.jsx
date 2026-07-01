@@ -70,7 +70,7 @@ const AdminLayout = ({ children }) => {
             <div
               key={item.key}
               className={`navbar-item ${
-                selectedMenuKey == item.key ? "active" : ""
+                selectedMenuKey === item.key ? "active" : ""
               }`}
               onClick={() => handleMenuClick(item.key)}
             >

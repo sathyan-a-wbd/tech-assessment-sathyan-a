@@ -22,7 +22,7 @@ const Producers = ({ viewState, editState, addState }) => {
 
   useEffect(() => {
     fetchProducers();
-  });
+  }, []);
 
   const filteredProducers = producers.filter((producer) =>
     producer.name?.toLowerCase().includes(filter.name?.toLowerCase() || ""),
@@ -31,7 +31,7 @@ const Producers = ({ viewState, editState, addState }) => {
   const handleDelete = async (id) => {
     try {
       const res = await DeleteProducer(id);
-      if (res.status == "success") {
+      if (res.status === "success") {
         const list = producers.filter((d) => d.id !== id);
         updateProducers(list);
         showToast({
@@ -41,7 +41,7 @@ const Producers = ({ viewState, editState, addState }) => {
       }
     } catch (err) {
       console.error(err);
-      if (err?.response?.data?.message == "Token refreshed") {
+      if (err?.response?.data?.message === "Token refreshed") {
         TokenRefreshedModal();
       }
       showToast({
