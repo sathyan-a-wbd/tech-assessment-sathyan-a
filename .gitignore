@@ -5,6 +5,9 @@
 
 # Node artifact files
 node_modules/
+.env
+dev.sqlite3
+database/dev.sqlite3
 dist/
 
 # Compiled Java class files
