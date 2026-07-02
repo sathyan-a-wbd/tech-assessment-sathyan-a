@@ -68,7 +68,7 @@ const Login = () => {
           <div className="input-group">
             <input
               type="email"
-              className="login-input"
+              className="px-4 py-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-green-500"
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -78,7 +78,7 @@ const Login = () => {
           <div className="input-group password-group">
             <input
               type={passwordVisible ? "text" : "password"}
-              className="login-input"
+              className="px-4 py-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-green-500"
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -93,7 +93,11 @@ const Login = () => {
             </span>
           </div>
           <div className="button-group">
-            <button type="submit" className="login-btn" disabled={loading}>
+            <button
+              type="submit"
+              className="w-full text-center bg-green-600 py-3 text-white hover:bg-green-500 rounded-lg"
+              disabled={loading}
+            >
               {loading ? "Logging in..." : "Log in"}
             </button>
           </div>
@@ -101,7 +105,7 @@ const Login = () => {
           <div className="button-group">
             <button
               type="button"
-              className="signup-btn"
+              className="signup-btn hover:bg-gray-500"
               onClick={() => navigate("/register")}
             >
               Sign Up

@@ -14,7 +14,7 @@ const ViewProducerPage = () => {
   const [producer, setProducer] = useState(null);
   const producerId = Number(id);
   const onLoad = async () => {
-    const data = producers.find((d) => d.id == producerId);
+    let data = producers.find((d) => d.id == producerId);
     if (!data) {
       await fetchProducers();
       data = producers.find((d) => d.id === producerId);

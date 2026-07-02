@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { RegisterUser } from "../../services/Index";
-import { message } from "antd";
+// import { message } from "antd"; unused import, consider removing if not needed
 import Common from "../../common/common";
-import "./Register.css"; // Assuming you want to use custom styles for this
+// import "./Register.css"; // Assuming you want to use custom styles for this - Iam going to use tailwindcss for styling, so this line can be removed if not needed
 import ToastOverlay from "../../components/ToastOverlay";
 
 const Register = () => {
@@ -73,16 +73,16 @@ const Register = () => {
   };
 
   return (
-    <div className="register-wrapper">
-      <div className="register-card">
-        <h2>Register</h2>
-        <form onSubmit={onFinish}>
-          <div className="input-row">
+    <div className="w-full min-h-screen flex  items-center justify-center ">
+      <div className=" w-full md:w-1/3 m-8 flex flex-col gap-4 p-8 ring-1 ring-white/20 rounded-lg shadow-md">
+        <h2 className="font-medium text-center text-xl">Register</h2>
+        <form className="flex flex-col gap-4 p-8" onSubmit={onFinish}>
+          <div className="">
             {/* Full Name Field */}
-            <div className="input-group">
+            <div className="mb-4">
               <input
                 type="text"
-                className="register-input"
+                className="px-4 py-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-green-500"
                 placeholder="Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -91,10 +91,10 @@ const Register = () => {
             </div>
 
             {/* Email Field */}
-            <div className="input-group">
+            <div className="">
               <input
                 type="email"
-                className="register-input"
+                className="px-4 py-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-green-500"
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -103,12 +103,12 @@ const Register = () => {
             </div>
           </div>
 
-          <div className="input-row">
+          <div className="">
             {/* Password Field */}
-            <div className="input-group password-group">
+            <div className=" mb-4 relative">
               <input
                 type={passwordVisible ? "text" : "password"}
-                className="register-input"
+                className="px-4 py-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-green-500"
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -123,10 +123,10 @@ const Register = () => {
             </div>
 
             {/* Confirm Password Field */}
-            <div className="input-group password-group">
+            <div className="mb-4 relative">
               <input
                 type={confirmPasswordVisible ? "text" : "password"}
-                className="register-input"
+                className="px-4 py-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-green-500"
                 placeholder="Confirm Password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
@@ -144,26 +144,32 @@ const Register = () => {
           </div>
 
           {/* Submit Button */}
-          <div className="button-group">
-            <button type="submit" className="register-btn" disabled={loading}>
-              {loading ? "Registering..." : "Register"}
-            </button>
-          </div>
+          <div className="flex-col flex gap-4 w-full items-center justify-center">
+            <div className="w-full ">
+              <button
+                type="submit"
+                className="w-full text-center bg-green-600 py-3 text-white hover:bg-green-500 rounded-lg"
+                disabled={loading}
+              >
+                {loading ? "Registering..." : "Register"}
+              </button>
+            </div>
 
-          {/* Already have an account? */}
-          <div className="button-group">
-            <button
-              type="button"
-              className="login-btn"
-              onClick={() => navigate("/login")}
-            >
-              Already have an account? Log in
-            </button>
+            {/* Already have an account? */}
+            <div className="button-group">
+              <button
+                type="button"
+                className="underline text-green-600 hover:text-green-800 text-sm tracking-wide cursor-pointer"
+                onClick={() => navigate("/login")}
+              >
+                Already have an account? Log in
+              </button>
+            </div>
           </div>
         </form>
       </div>
 
-      <div className="waves-wrp">
+      <div className="waves-wrp bottom-0 absolute w-full -z-20">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           xmlnsXlink="http://www.w3.org/1999/xlink"

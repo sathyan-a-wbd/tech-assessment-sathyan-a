@@ -1,4 +1,6 @@
-.register-wrapper {
+@import "tailwindcss";
+
+/* .register-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -64,4 +66,4 @@
 .waves-wrp {
   margin-top: 50px;
   z-index: 0;
-}
+} */
