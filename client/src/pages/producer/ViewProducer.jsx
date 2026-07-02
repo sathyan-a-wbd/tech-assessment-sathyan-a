@@ -12,12 +12,15 @@ const ViewProducerPage = () => {
   const { producers = [] } = useSelector(selectProducer);
   const { fetchProducers, navigate } = Common();
   const [producer, setProducer] = useState(null);
-
+  const producerId = Number(id);
   const onLoad = async () => {
-    const data = producers.find((d) => d.id == id);
-    if (!data) await fetchProducers();
+    const data = producers.find((d) => d.id == producerId);
+    if (!data) {
+      await fetchProducers();
+      data = producers.find((d) => d.id === producerId);
+    }
     if (data) {
-      setProducer(producers.find((a) => a.id == id));
+      setProducer(producers.find((a) => a.id == producerId));
     }
   };
 

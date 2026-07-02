@@ -4,7 +4,7 @@ const { protect } = require("../middleware/authMiddleware");
 const upload = require("../utils/upload");
 const router = express.Router();
 
-router.get("/get-all", protect, producerController.getAllProducers);
+router.post("/get-all", protect, producerController.getAllProducers);
 router.post(
   "/",
   protect,
