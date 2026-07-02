@@ -126,16 +126,11 @@ const EditMovie = () => {
       data.append("producer", formData.producer);
       formData.actors.forEach((id) => data.append("actors[]", id));
       if (imageFile) data.append("poster", imageFile);
-      console.log("Route id:", id);
-      console.log("movieId:", movieId);
 
       for (const [k, v] of data.entries()) {
         console.log(k, v);
       }
       const res = await UpdateMovie(id, data);
-      console.log("UpdateMovie response:", res.data);
-      console.log(res.data.id === movieId);
-      console.log(res.data.id, movieId);
 
       if (res.data.id === movieId) {
         console.log(res.message || "Movie updated successfully");

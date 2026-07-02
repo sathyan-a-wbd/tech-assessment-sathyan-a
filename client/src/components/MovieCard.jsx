@@ -6,6 +6,8 @@ import "./MovieCard.css"; // Import the CSS file
 
 const MovieCard = ({ data, userRole, setShowConfirm, setTargetMovie }) => {
   const { navigate } = Common();
+  console.log(userRole);
+
   return (
     <div key={data.id} className="card">
       <img src={data.poster || no_flag} alt="Poster" className="card-poster" />

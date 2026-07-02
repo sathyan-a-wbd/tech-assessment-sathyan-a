@@ -31,6 +31,8 @@ const Login = () => {
         return;
       }
       const res = await LoginUser({ email, password });
+      console.log(res);
+
       if (res.status == "success") {
         localStorage.setItem("accessToken", res.data.token);
         localStorage.setItem("refreshToken", res.data.token);

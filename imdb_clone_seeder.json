@@ -1468,7 +1468,7 @@
       "gender": "Female",
       "dob": "1980-01-01T00:00:00.000Z",
       "bio": "Fetched from TMDB",
-      "image": "http://localhost:4444/uploads/images/1746436017571-594550855.jpg",
+      "image": "http://localhost:5000/uploads/images/1746436017571-594550855.jpg",
       "createdAt": "2025-05-05T04:29:58.525Z",
       "updatedAt": "2025-05-05T09:06:57.587Z"
     },

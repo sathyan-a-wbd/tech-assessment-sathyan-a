@@ -13,6 +13,7 @@ const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState(""); // Added role state
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
@@ -52,7 +53,7 @@ const Register = () => {
         setLoading(false);
         return;
       }
-      const res = await RegisterUser({ name, email, password });
+      const res = await RegisterUser({ name, email, password, role });
       showToast({
         message: res?.message,
         type: res?.status,
@@ -60,6 +61,7 @@ const Register = () => {
       setName("");
       setEmail("");
       setPassword("");
+      setRole(""); // Reset role field
       setConfirmPassword("");
       navigate("/login");
     } catch (err) {
@@ -74,7 +76,7 @@ const Register = () => {
 
   return (
     <div className="w-full min-h-screen flex  items-center justify-center ">
-      <div className=" w-full md:w-1/3 m-8 flex flex-col gap-4 p-8 ring-1 ring-white/20 rounded-lg shadow-md">
+      <div className=" w-full md:w-100 m-8 flex flex-col gap-4 p-8 ring-1 ring-white/20 rounded-lg shadow-md">
         <h2 className="font-medium text-center text-xl">Register</h2>
         <form className="flex flex-col gap-4 p-8" onSubmit={onFinish}>
           <div className="">
@@ -121,7 +123,23 @@ const Register = () => {
                 {passwordVisible ? <FaEyeSlash /> : <FaEye />}
               </span>
             </div>
-
+            {/* {//role} its for testing purpose*/}
+            {/* <div className=" mb-4 relative">
+              <input
+                type="text"
+                className="px-4 py-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-green-500"
+                placeholder="Role"
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                required
+              />
+              <span
+                className="eye-icon"
+                onClick={() => setPasswordVisible(!passwordVisible)}
+              >
+                {passwordVisible ? <FaEyeSlash /> : <FaEye />}
+              </span>
+            </div> */}
             {/* Confirm Password Field */}
             <div className="mb-4 relative">
               <input

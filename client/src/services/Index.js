@@ -37,8 +37,12 @@ export const DeleteActor = async (id) => {
 };
 
 // ================ Movie =====================
-export const GetMovie = async (data) => {
-  return await requests.post(`movies/get-all`, data);
+export const GetMovie = async ({ page = 1, limit = 10, name = "" } = {}) => {
+  return await requests.post("movies/get-all", {
+    page,
+    limit,
+    name,
+  });
 };
 export const CreateMovie = async (formData) => {
   return await requests.post("/movies/", formData);

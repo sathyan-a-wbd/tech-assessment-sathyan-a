@@ -2,6 +2,8 @@
 
 This repository contains both the frontend (React/Vite) and the backend (Node.js/Express) for the IMDB Clone application.
 
+Candidate Bug Report: https://docs.google.com/document/d/1nh3WG1WgE1CBvY2iYMefEjdhG1PKBlGVrNh3x8_qh_8/edit?usp=sharing
+
 ## Directory Structure
 
 - `client/` - Frontend application
@@ -36,7 +38,7 @@ This repository contains both the frontend (React/Vite) and the backend (Node.js
      ```powershell
      New-Item dev.sqlite3 -Type File
      ```
-   *(Or simply create a new empty file named `dev.sqlite3` in the root folder using your code editor).*
+     _(Or simply create a new empty file named `dev.sqlite3` in the root folder using your code editor)._
 5. Set up the database schema and mock data:
    ```bash
    npx knex migrate:latest
@@ -59,6 +61,7 @@ This repository contains several intentional bugs for the purpose of a technical
 3. Debug and fix the issues you encounter.
 
 ### Submission Instructions
+
 To evaluate your debugging skills, please follow these submission guidelines carefully:
 
 1. Create a new repository on your GitHub account and push this codebase to it.
