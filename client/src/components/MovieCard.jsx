@@ -31,21 +31,25 @@ const MovieCard = ({ data, setShowConfirm, setTargetMovie }) => {
           >
             <FiEye />
           </button>
-          <button
-            className="primary-btn"
-            onClick={() => navigate(`/movies/edit/${data.id}`)}
-          >
-            <FiEdit />
-          </button>
-          <button
-            onClick={() => {
-              setTargetMovie(data);
-              setShowConfirm(true);
-            }}
-            className="delete-btn"
-          >
-            <FiTrash2 />
-          </button>
+          {userRole === "admin" && (
+            <>
+              <button
+                className="primary-btn"
+                onClick={() => navigate(`/movies/edit/${data.id}`)}
+              >
+                <FiEdit />
+              </button>
+              <button
+                onClick={() => {
+                  setTargetMovie(data);
+                  setShowConfirm(true);
+                }}
+                className="delete-btn"
+              >
+                <FiTrash2 />
+              </button>
+            </>
+          )}
         </div>
       </div>
     </div>

@@ -98,6 +98,7 @@ const Movies = ({ viewState, editState, addState }) => {
             <div key={movie.id} style={{ position: "relative" }}>
               <MovieCard
                 data={movie}
+                userRole={userRole}
                 setShowConfirm={setShowConfirm}
                 setTargetMovie={setTargetMovie}
               />
