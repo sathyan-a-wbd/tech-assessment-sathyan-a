@@ -7,6 +7,7 @@ import Common from "../../common/common";
 import "./Login.css";
 import ToastOverlay from "../../components/ToastOverlay";
 import { LoginUser } from "../../services/Index";
+import { message } from "antd";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -22,7 +23,10 @@ const Login = () => {
     try {
       //validations
       if (!email.trim() || !password.trim()) {
-        showToast("Email and password are required", "error");
+        showToast({
+          message: "Email and password are required",
+          type: "error",
+        });
         setLoading(false);
         return;
       }
@@ -35,19 +39,23 @@ const Login = () => {
           res.data.role === "admin" ? "admin" : "user",
         );
         localStorage.setItem("userName", res.data.name);
-        showToast(res?.message || "Something went wrong", res.status);
+        showToast({
+          message: res?.message || "Something went wrong",
+          type: res.status,
+        });
         setTimeout(() => {
           navigate("/actors");
         }, 1000);
       }
     } catch (err) {
-      showToast(
-        err.response?.data?.message ||
+      showToast({
+        message:
+          err.response?.data?.message ||
           err?.message ||
           "Invalid credentials" ||
           "Something went wrong",
-        "error",
-      );
+        type: "error",
+      });
     } finally {
       setLoading(false);
     }
