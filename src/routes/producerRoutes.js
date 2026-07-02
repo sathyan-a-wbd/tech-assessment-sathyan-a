@@ -4,18 +4,18 @@ const { protect } = require("../middleware/authMiddleware");
 const upload = require("../utils/upload");
 const router = express.Router();
 
-router.post("/get-all", protect, producerController.getAllProducers);
+router.get("/get-all", protect, producerController.getAllProducers);
 router.post(
   "/",
   protect,
   upload.single("image"),
-  producerController.createProducer
+  producerController.createProducer,
 );
 router.put(
   "/:id",
   protect,
   upload.single("image"),
-  producerController.updateProducer
+  producerController.updateProducer,
 );
 router.delete("/:id", producerController.deleteProducer);
 

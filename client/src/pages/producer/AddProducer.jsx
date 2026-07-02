@@ -56,7 +56,10 @@ const AddProducer = () => {
       const fd = new FormData();
       fd.append("name", formData.name);
       fd.append("gender", formData.gender);
-      fd.append("dob", formData.dob);
+      fd.append(
+        "dob",
+        formData.dob ? moment(formData.dob).format("YYYY-MM-DD") : "",
+      );
       fd.append("bio", formData.bio);
       if (imageFile) fd.append("image", imageFile.originFileObj);
 

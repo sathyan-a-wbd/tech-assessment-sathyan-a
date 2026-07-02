@@ -20,9 +20,13 @@ const EditProducer = () => {
     dob: null,
     bio: "",
   });
+  const producerId = Number(id);
   const onLoad = async () => {
-    const data = producers.find((d) => d.id == id);
-    if (!data) await fetchProducers();
+    let data = producers.find((d) => d.id === producerId);
+    if (!data) {
+      await fetchProducers();
+      data = producers.find((d) => d.id === producerId);
+    }
     if (data) {
       setFormData({
         name: data.name || "",
@@ -80,13 +84,13 @@ const EditProducer = () => {
         };
         res = await UpdateProducer(id, payload);
       }
-      if (res.data.id == id) {
+      if (res.data.id === producerId) {
         showToast({
           message: res.message || "updated successfully",
           type: "success",
         });
         console.log(res.message || "Producer updated successfully");
-        const list = producers.map((d) => (d.id == id ? res.data : d));
+        const list = producers.map((d) => (d.id === producerId ? res.data : d));
         updateProducers(list);
         navigate(-1);
       }
@@ -157,7 +161,7 @@ const EditProducer = () => {
                 type="text"
                 value={formData.name}
                 onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
+                  setFormData((prev) => ({ ...prev, name: e.target.value }))
                 }
                 required
                 className="edit-producer-input"
@@ -168,7 +172,7 @@ const EditProducer = () => {
               <select
                 value={formData.gender}
                 onChange={(e) =>
-                  setFormData({ ...formData, gender: e.target.value })
+                  setFormData((prev) => ({ ...prev, gender: e.target.value }))
                 }
                 required
                 className="edit-producer-input"
@@ -185,7 +189,7 @@ const EditProducer = () => {
                 type="date"
                 value={formData.dob ? formData.dob.format("YYYY-MM-DD") : ""}
                 onChange={(e) =>
-                  setFormData({ ...formData, dob: moment(e.target.value) })
+                  setFormData((prev) => ({ ...prev, dob: e.target.value }))
                 }
                 required
                 className="edit-producer-input"
@@ -197,7 +201,7 @@ const EditProducer = () => {
                 rows={4}
                 value={formData.bio}
                 onChange={(e) =>
-                  setFormData({ ...formData, bio: e.target.value })
+                  setFormData((prev) => ({ ...prev, bio: e.target.value }))
                 }
                 required
                 className="edit-producer-textarea"
