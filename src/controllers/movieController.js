@@ -9,7 +9,7 @@ exports.getAllMovies = async (req, res) => {
       filter.name = name;
     }
 
-    const offset = page * limit;
+    const offset = (page - 1) * limit;
 
     const movies = await Movie.find(filter, limit, offset);
 
@@ -113,7 +113,7 @@ exports.updateMovie = async (req, res) => {
     if (req.file) {
       posterUrl = `${req.protocol}://${
         req.get("X-Forwarded-Host") || req.get("Host")
-      }/uploads/posters/${req.file.filename}`;
+      }/uploads/images/${req.file.filename}`;
     }
 
     const dataToUpdate = {};
