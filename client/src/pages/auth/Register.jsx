@@ -22,15 +22,49 @@ const Register = () => {
     e.preventDefault();
     setLoading(true);
     try {
+      //Validqations
+      if (
+        !name.trim() ||
+        !email.trim() ||
+        !password.trim() ||
+        !confirmPassword.trim()
+      ) {
+        showToast({
+          message: "All fields are required",
+          type: "error",
+        });
+        setLoading(false);
+        return;
+      }
+      if (password.length < 6) {
+        showToast({
+          message: "Password must be at least 6 characters long",
+          type: "error",
+        });
+        setLoading(false);
+        return;
+      }
+      if (password !== confirmPassword) {
+        showToast({
+          message: "Passwords do not match",
+          type: "error",
+        });
+        setLoading(false);
+        return;
+      }
       const res = await RegisterUser({ name, email, password });
       showToast({
         message: res?.message,
-        type: res.status,
+        type: res?.status,
       });
+      setName("");
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
       navigate("/login");
     } catch (err) {
       showToast({
-        message: err.response?.data?.message || "Something went wrong",
+        message: err?.response?.data?.message || "Something went wrong",
         type: "error",
       });
     } finally {

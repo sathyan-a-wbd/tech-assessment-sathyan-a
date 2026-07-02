@@ -20,13 +20,19 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     try {
+      //validations
+      if (!email.trim() || !password.trim()) {
+        showToast("Email and password are required", "error");
+        setLoading(false);
+        return;
+      }
       const res = await LoginUser({ email, password });
       if (res.status == "success") {
         localStorage.setItem("accessToken", res.data.token);
         localStorage.setItem("refreshToken", res.data.token);
         localStorage.setItem(
           "userRole",
-          res.data.name === "admin" ? "admin" : "user",
+          res.data.role === "admin" ? "admin" : "user",
         );
         localStorage.setItem("userName", res.data.name);
         showToast(res?.message || "Something went wrong", res.status);
@@ -35,7 +41,13 @@ const Login = () => {
         }, 1000);
       }
     } catch (err) {
-      showToast(err.response?.data?.message || "Something went wrong", "error");
+      showToast(
+        err.response?.data?.message ||
+          err?.message ||
+          "Invalid credentials" ||
+          "Something went wrong",
+        "error",
+      );
     } finally {
       setLoading(false);
     }
