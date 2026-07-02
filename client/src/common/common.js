@@ -111,12 +111,18 @@ const Common = () => {
   const onClose = () => {
     setToast({ message: "", type: "" });
   };
+  const TokenRefreshedModal = () => {
+    showToast({
+      message: "Your session was refreshed. Please try that action again.",
+      type: "info",
+    });
+  };
 
   return {
     dispatch,
     navigate,
     LogoutModal,
-    TokenRefreshedModal: "",
+    TokenRefreshedModal,
     fetchActors,
     updateActors,
     fetchProducers,
