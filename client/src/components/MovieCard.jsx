@@ -24,7 +24,10 @@ const MovieCard = ({ data, setShowConfirm, setTargetMovie }) => {
         <div className="actions">
           <button
             className="primary-btn"
-            onClick={() => navigate(`/movies/${data.id}`)}
+            onClick={() => {
+              console.log("Navigating to movie details for ID:", data.id);
+              navigate(`/movies/${data.id}`);
+            }}
           >
             <FiEye />
           </button>

@@ -109,7 +109,7 @@ exports.updateMovie = async (req, res) => {
     const { name, yearOfRelease, plot, producer, actors } = req.body;
 
     let posterUrl = req.body.poster;
-
+    console.log("req.body", req.params.id);
     if (req.file) {
       posterUrl = `${req.protocol}://${
         req.get("X-Forwarded-Host") || req.get("Host")
@@ -119,7 +119,7 @@ exports.updateMovie = async (req, res) => {
     const dataToUpdate = {};
     if (name !== undefined) dataToUpdate.name = name;
     if (yearOfRelease !== undefined) dataToUpdate.yearOfRelease = yearOfRelease;
-    // if (plot !== undefined) dataToUpdate.plot = plot;
+    if (plot !== undefined) dataToUpdate.plot = plot;
     if (posterUrl !== undefined) dataToUpdate.poster = posterUrl;
     if (producer !== undefined) dataToUpdate.producer = producer;
     if (actors !== undefined) dataToUpdate.actors = actors;
@@ -128,7 +128,7 @@ exports.updateMovie = async (req, res) => {
       req.params.id,
       dataToUpdate,
     );
-
+    console.log("updatedMovie", updatedMovie.id);
     if (!updatedMovie) {
       return sendResponse(res, {
         statusCode: 404,

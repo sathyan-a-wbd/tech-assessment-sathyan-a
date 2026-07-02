@@ -27,7 +27,7 @@ const Movies = ({ viewState, editState, addState }) => {
     if (!movies.length) fetchMovies({ setLoading });
   }, []);
 
-  const filteredMovies = movies.filter((movie) =>
+  const filteredMovies = movies?.filter((movie) =>
     movie.name?.toLowerCase().includes(filter.name?.toLowerCase() || ""),
   );
 
@@ -64,6 +64,7 @@ const Movies = ({ viewState, editState, addState }) => {
       const delay = Math.random() * 1000 + 500;
       await new Promise((resolve) => setTimeout(resolve, delay));
       const res = await GetMovie();
+      console.log("GetMovie response:", res.data);
       const list = res?.data?.map((item) => ({ ...item, key: item.id })) || [];
       const searchedList = list.filter((m) =>
         m.name?.toLowerCase().includes(searchText.toLowerCase()),
@@ -73,6 +74,7 @@ const Movies = ({ viewState, editState, addState }) => {
       console.error(err);
     }
   };
+
   useEffect(() => {
     handleSearch();
   }, [searchText]);

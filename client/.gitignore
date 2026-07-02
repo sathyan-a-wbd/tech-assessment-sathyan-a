@@ -10,6 +10,7 @@ package-lock.json
 .env
 
 node_modules
+.env
 dist
 dist-ssr
 *.local

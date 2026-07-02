@@ -43,7 +43,7 @@ const Movie = {
 
   async findById(id) {
     const movie = await db("movies")
-      .where({ producer_id: id })
+      .where({ id }) //found a bug here, it should be .where({ id }) instead of .where({ ptoducer_id: id })
       .whereNull("deleted_at")
       .first();
     return this._attachRelations(movie);

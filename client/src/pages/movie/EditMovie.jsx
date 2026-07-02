@@ -37,21 +37,22 @@ const EditMovie = () => {
     fetchMovies,
     showToast,
   } = Common();
-
+  const movieId = Number(id);
   useEffect(() => {
     const loadData = async () => {
-      let data = movies.find((d) => d.id == id);
+      let data = movies.find((d) => d.id === movieId);
       if (!data) {
         await fetchMovies();
-        data = movies.find((d) => d.id == id);
+        data = movies.find((d) => d.id === movieId);
       }
+      console.log("Fetched movie data:", data);
       if (data) {
         setFormData({
-          name: data.name,
-          yearOfRelease: data.yearOfRelease,
-          plot: data.plot,
-          producer: data.producer.id,
-          actors: data.actors?.map((actor) => actor.id) || [],
+          name: data?.name,
+          yearOfRelease: data?.yearOfRelease,
+          plot: data?.plot,
+          producer: data?.producer?.id,
+          actors: data?.actors?.map((actor) => actor.id) || [],
         });
         if (data.poster) {
           setPreviewURL(data.poster);
@@ -94,10 +95,10 @@ const EditMovie = () => {
     if (!formData.yearOfRelease) newErrors.yearOfRelease = "Year is required";
     if (!formData.plot.trim()) newErrors.plot = "Plot is required";
     if (!formData.producer) newErrors.producer = "Producer is required";
-    if (formData.actors.length == 0)
+    if (formData.actors.length === 0)
       newErrors.actors = "Select at least one actor";
     setErrors(newErrors);
-    return Object.keys(newErrors).length == 0;
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleImageChange = (e) => {
@@ -125,12 +126,21 @@ const EditMovie = () => {
       data.append("producer", formData.producer);
       formData.actors.forEach((id) => data.append("actors[]", id));
       if (imageFile) data.append("poster", imageFile);
+      console.log("Route id:", id);
+      console.log("movieId:", movieId);
 
+      for (const [k, v] of data.entries()) {
+        console.log(k, v);
+      }
       const res = await UpdateMovie(id, data);
-      if (res.data.id == id) {
+      console.log("UpdateMovie response:", res.data);
+      console.log(res.data.id === movieId);
+      console.log(res.data.id, movieId);
+
+      if (res.data.id === movieId) {
         console.log(res.message || "Movie updated successfully");
-        const list = movies.map((d) => (d.id == id ? res.data : d));
-        // updateMovies(list);
+        const list = movies.map((d) => (d.id === movieId ? res.data : d));
+        updateMovies(list);
         navigate(-1);
         showToast({
           message: res.message || "updated successfully",
@@ -142,7 +152,7 @@ const EditMovie = () => {
         message: err?.response?.data?.message || "Something went wrong",
         type: "error",
       });
-      if (err?.response?.data?.message == "Token refreshed") {
+      if (err?.response?.data?.message === "Token refreshed") {
         TokenRefreshedModal();
       } else {
         console.log(err?.response?.data?.message || "Something went wrong");
