@@ -78,7 +78,7 @@ const Register = () => {
     <div className="w-full min-h-screen flex  items-center justify-center ">
       <div className=" w-full md:w-100 m-8 flex flex-col gap-4 p-8 ring-1 ring-white/20 rounded-lg shadow-md">
         <h2 className="font-medium text-center text-xl">Register</h2>
-        <form className="flex flex-col gap-4 p-8" onSubmit={onFinish}>
+        <form className="flex flex-col gap-4 p-2" onSubmit={onFinish}>
           <div className="">
             {/* Full Name Field */}
             <div className="mb-4">
