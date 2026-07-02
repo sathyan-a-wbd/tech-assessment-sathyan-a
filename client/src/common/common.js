@@ -82,7 +82,8 @@ const Common = () => {
     } catch (err) {
       console.error(err);
       if (err?.response?.data?.message == "Token refreshed") {
-        handleTokenExpired();
+        // handleTokenExpired();//its can handled by tokenrefreshmodel
+        TokenRefreshedModal();
       } else {
         // Set error toast
         if (err?.response?.status !== 500) {
