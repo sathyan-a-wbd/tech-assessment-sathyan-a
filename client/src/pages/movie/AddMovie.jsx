@@ -49,23 +49,57 @@ const AddMovie = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-
-  const onActorSelect = (e) => {
-    const options = [...e.target.options];
-    const selected = options.filter((o) => o.selected).map((o) => o.value);
-    setFormData((prev) => ({ ...prev, actors: selected }));
-  };
+  //unused functions
+  // const handleActorSelect = (e) => {
+  //   const selectedOptions = Array.from(e.target.selectedOptions).map(
+  //     (o) => o.value,
+  //   );
+  //   setFormData({ ...formData, actors: selectedOptions });
+  // };
+  // const onActorSelect = (e) => {
+  //   const options = [...e.target.options];
+  //   const selected = options.filter((o) => o.selected).map((o) => o.value);
+  //   setFormData((prev) => ({ ...prev, actors: selected }));
+  // };
 
   const validateForm = () => {
     const newErrors = {};
     if (!formData.name.trim()) newErrors.name = "Movie name is required";
+    const year = Number(formData.yearOfRelease);
+    const currentYear = new Date().getFullYear();
     if (!formData.yearOfRelease) newErrors.yearOfRelease = "Year is required";
+    else if (isNaN(year) || year < 1888 || year > currentYear + 5) {
+      newErrors.yearOfRelease = `Year must be between 1888 and ${currentYear + 5}`;
+    }
     if (!formData.plot.trim()) newErrors.plot = "Plot is required";
     if (!formData.producer) newErrors.producer = "Producer is required";
-    if (formData.actors.length == 0)
+    if (formData.actors.length === 0)
       newErrors.actors = "Select at least one actor";
     setErrors(newErrors);
-    return Object.keys(newErrors).length == 0;
+    return Object.keys(newErrors).length === 0;
+  };
+  const handleImageChange = (e) => {
+    const max_size = 5 * 1024 * 1024; // 5MB
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      showToast({
+        message: "Please select a valid image file",
+        type: "error",
+      });
+      e.target.value = "";
+      return;
+    }
+    if (file.size > max_size) {
+      showToast({
+        message: "File size exceeds 5MB limit",
+        type: "error",
+      });
+      e.target.value = "";
+      return;
+    }
+    setImageFile(file);
   };
 
   const onFinish = async () => {
@@ -82,8 +116,8 @@ const AddMovie = () => {
       if (imageFile) data.append("poster", imageFile);
 
       const res = await CreateMovie(data);
-      if (res.status == "success") {
-        const list = [res, ...movies];
+      if (res.status === "success") {
+        const list = [res.data, ...movies]; //res adds the entire API response instead of the created movie.
         updateMovies(list);
         navigate(-1);
         showToast({
@@ -96,7 +130,7 @@ const AddMovie = () => {
         message: err?.response?.data?.message || "Something went wrong",
         type: "error",
       });
-      if (err?.response?.data?.message == "Token refreshed") {
+      if (err?.response?.data?.message === "Token refreshed") {
         TokenRefreshedModal();
       } else {
         console.log(err?.response?.data?.message || "Something went wrong");
@@ -107,17 +141,17 @@ const AddMovie = () => {
     }
   };
 
-  const handleActorSelect = (e) => {
-    const selectedOptions = Array.from(e.target.selectedOptions).map(
-      (o) => o.value,
-    );
-    setFormData({ ...formData, actors: selectedOptions });
-  };
-
   useEffect(() => {
     setLoading(true);
     Promise.all([fetchProducers(), fetchActors()])
-      .catch(() => {}) // Handle any unhandled errors
+      .catch((error) => {
+        console.error("Error fetching producers or actors:", error);
+        showToast({
+          message:
+            "Error fetching producers or actors" || "Something went wrong",
+          type: "error",
+        });
+      }) // Handle any unhandled errors
       .finally(() => setLoading(false));
   }, []);
 
@@ -155,7 +189,8 @@ const AddMovie = () => {
             <input
               type="file"
               accept="image/*"
-              onChange={(e) => setImageFile(e.target.files[0])}
+              onChange={(e) => handleImageChange(e)}
+              // onChange={(e) => setImageFile(e.target.files[0])}
               className="add-movie-uploadInput"
             />
           </div>
@@ -180,6 +215,9 @@ const AddMovie = () => {
             <input
               type="number"
               name="yearOfRelease"
+              min="1888"
+              max={new Date().getFullYear() + 5}
+              step="1"
               value={formData.yearOfRelease}
               onChange={onInputChange}
               placeholder="e.g., 2024"
