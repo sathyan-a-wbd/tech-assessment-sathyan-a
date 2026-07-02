@@ -189,7 +189,10 @@ const EditProducer = () => {
                 type="date"
                 value={formData.dob ? formData.dob.format("YYYY-MM-DD") : ""}
                 onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, dob: e.target.value }))
+                  setFormData((prev) => ({
+                    ...prev,
+                    dob: e.target.value ? moment(e.target.value) : null,
+                  }))
                 }
                 required
                 className="edit-producer-input"

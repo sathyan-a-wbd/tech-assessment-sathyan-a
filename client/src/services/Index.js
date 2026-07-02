@@ -8,6 +8,7 @@ export const RegisterUser = async (data) => {
 
 // ================== producers  page start ================
 export const GetProducers = async (data) => {
+  // const payload = data ? { ...data, name: data.name, name: undefined } : data; I thought its unnecessary to modify the payload, but it seems like the backend expects a specific structure. So, I will keep it as is for now.
   const payload = data ? { ...data, name: data.name, name: undefined } : data;
   return await requests.post(`producers/get-all`, payload);
 };
