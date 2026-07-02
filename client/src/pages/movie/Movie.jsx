@@ -93,7 +93,7 @@ const Movies = ({ viewState, editState, addState }) => {
       {loading ? (
         <div className="loading-text">Loading...</div>
       ) : filteredMovies.length > 0 ? (
-        <div className="card-container">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
           {filteredMovies.map((movie) => (
             <div key={movie.id} style={{ position: "relative" }}>
               <MovieCard

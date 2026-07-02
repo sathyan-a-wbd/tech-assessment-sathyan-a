@@ -67,11 +67,11 @@ exports.updateActor = async (req, res) => {
     }
 
     const dataToUpdate = {};
-    if (name) dataToUpdate.name = name;
-    if (gender) dataToUpdate.gender = gender;
-    if (dob) dataToUpdate.dob = dob;
-    if (bio) dataToUpdate.bio = bio;
-    if (image) dataToUpdate.image = image;
+    if (name !== undefined) dataToUpdate.name = name;
+    if (gender !== undefined) dataToUpdate.gender = gender;
+    if (dob !== undefined) dataToUpdate.dob = dob;
+    if (bio !== undefined) dataToUpdate.bio = bio;
+    if (image !== undefined) dataToUpdate.image = image;
 
     const updatedActor = await Actor.findByIdAndUpdate(actorId, dataToUpdate);
 
@@ -92,7 +92,7 @@ exports.updateActor = async (req, res) => {
     sendResponse(res, {
       statusCode: 500,
       status: "error",
-      message: "Failed to update actor",
+      message: err?.message || "Failed to update actor",
     });
   }
 };
@@ -120,7 +120,7 @@ exports.deleteActor = async (req, res) => {
     sendResponse(res, {
       statusCode: 500,
       status: "error",
-      message: "Failed to delete actor",
+      message: err?.message || "Failed to delete actor",
     });
   }
 };

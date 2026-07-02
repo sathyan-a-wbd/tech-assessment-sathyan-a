@@ -81,7 +81,7 @@ const Actors = ({ viewState, editState, addState }) => {
       {loading ? (
         <div>Loading...</div>
       ) : actors.length > 0 ? (
-        <div className="cardContainer">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
           {filteredActors.map((item) => (
             <Card
               key={item.id}

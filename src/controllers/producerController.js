@@ -64,15 +64,18 @@ exports.updateProducer = async (req, res) => {
         req.get("X-Forwarded-Host") || req.get("Host")
       }/uploads/images/${req.file.filename}`;
     }
-    
-    const dataToUpdate = {};
-    if (name) dataToUpdate.name = name;
-    if (gender) dataToUpdate.gender = gender;
-    if (dob) dataToUpdate.dob = dob;
-    if (bio) dataToUpdate.bio = bio;
-    if (image) dataToUpdate.image = image;
 
-    const updatedProducer = await Producer.findByIdAndUpdate(req.params.id, dataToUpdate);
+    const dataToUpdate = {};
+    if (name !== undefined) dataToUpdate.name = name;
+    if (gender !== undefined) dataToUpdate.gender = gender;
+    if (dob !== undefined) dataToUpdate.dob = dob;
+    if (bio !== undefined) dataToUpdate.bio = bio;
+    if (image !== undefined) dataToUpdate.image = image;
+
+    const updatedProducer = await Producer.findByIdAndUpdate(
+      req.params.id,
+      dataToUpdate,
+    );
 
     if (!updatedProducer) {
       return sendResponse(res, {

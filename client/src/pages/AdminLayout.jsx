@@ -69,13 +69,11 @@ const AdminLayout = ({ children }) => {
           {menuItems.map((item) => (
             <div
               key={item.key}
-              className={`navbar-item ${
-                selectedMenuKey === item.key ? "active" : ""
-              }`}
+              className={`flex gap-2 items-center justify-center  ${selectedMenuKey === item.key ? "border-b-2 border-blue-500 text-white px-2 py-2 rounded-sm" : " "}`}
               onClick={() => handleMenuClick(item.key)}
             >
-              <span className="icon">{item.icon}</span>
-              <span className="label">{item.label}</span>
+              <span className="icon mb-2">{item.icon}</span>
+              <span className="label ">{item.label}</span>
             </div>
           ))}
         </div>
